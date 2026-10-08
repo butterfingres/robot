@@ -3,8 +3,11 @@
              (guix build-system gnu)
              (guix gexp)
              (guix git-download)
+             ((guix licenses) #:prefix license:)
              (guix packages)
-             ((guix licenses) #:prefix license:))
+             (guix store))
+
+(use-modules (gnu packages file))
 
 (define arm-none-eabi-toolchain
   (make-arm-none-eabi-toolchain-12.3.rel1))
@@ -24,7 +27,8 @@
       (base32
        "061jqvhv3n0lp52hs06mm4qgr2wk85nlbnvl4hxzwslpq2zwkscr"))))
    (build-system gnu-build-system)
-   (arguments `(#:make-flags '("OUTBIN=bin/libpros.a")
+   (inputs (list file))
+   (arguments `(#:make-flags '("bin/libpros.a")
                 #:tests? #f
                 #:phases ,#~(modify-phases %standard-phases
                               (replace 'configure
@@ -34,11 +38,10 @@
                                             #$(file-append coreutils "/bin/echo")))))
                               (replace 'install
                                        (lambda* (#:key outputs #:allow-other-keys)
-                                         (let* ((root (string-append #$output "/arm-none-eabi"))
-                                                (lib-dir (string-append root "/lib")))
-                                           (mkdir-p lib-dir)
-                                           (install-file "bin/libpros.a" lib-dir)
-                                           (copy-recursively "include" root)))))))
+                                         (rename-file "bin/libpros.a.public" "bin/libpros.a")
+                                         (let* ((root (string-append #$output "/arm-none-eabi")))
+                                           (install-file "bin/libpros.a" (string-append root "/lib"))
+                                           (copy-recursively "include" (string-append root "/include"))))))))
 
    (native-inputs (list arm-none-eabi-toolchain))
    (home-page "https://pros.cs.perdue.edu")
