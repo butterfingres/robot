@@ -7,7 +7,7 @@ CFLAGS = -mthumb -mcpu=cortex-m3 -mlittle-endian -Os -Wall -Wextra \
 -fsingle-precision-constant
 LDFLAGS = -nostartfiles -Wl,-static -Bfirmware -Wl,-u,VectorTable	\
 -Wl,-T -Xlinker firmware/cortex.ld -Wl,--gc-sections							\
--Wl,--start-group -lm -lgcc -lpros -Wl,--end-group
+-Wl,--start-group -lpros -Wl,--end-group
 
 OBJS = src/main.o
 
