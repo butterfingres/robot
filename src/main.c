@@ -1,9 +1,12 @@
 #include <API.h>
 
-void autonomous() {}
-void initializeIO() {}
-void initialize() {}
-void operatorControl() {
+void autonomous(void) {}
+
+void initializeIO(void) {}
+
+void initialize(void) {}
+
+void operatorControl(void) {
   print("hello world");
-  /* for(;;); */
+  for(;;);
 }
