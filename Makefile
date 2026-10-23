@@ -13,7 +13,7 @@ OBJS = src/main.o
 
 all: robot.bin
 clean:
-	-rm ${OBJS} *.bin *.elf
+	rm -f ${OBJS} *.bin *.elf
 
 robot.elf: ${OBJS}
 	${CC} ${CFLAGS} ${LDFLAGS} $^ -o $@
