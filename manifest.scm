@@ -57,4 +57,5 @@ focus on providing an environment for industry-applicable experience.")
 (concatenate-manifests
  (list (packages->manifest (list arm-none-eabi-toolchain
                                  pros-2))
-       (specifications->manifest '("make"))))
+       (specifications->manifest '("make"
+                                   "pros-cli"))))
