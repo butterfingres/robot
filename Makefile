@@ -14,8 +14,14 @@ OBJS = src/main.o
 all: robot.bin
 clean:
 	rm -f ${OBJS} *.bin *.elf
+upload: robot.bin
+	pros upload $< --target=cortex
+terminal:
+	pros terminal cortex
 
 robot.elf: ${OBJS}
 	${CC} ${CFLAGS} ${LDFLAGS} $^ -o $@
 robot.bin: robot.elf
 	${OBJCOPY} $< -O binary $@
+
+.PHONY: all clean upload terminal
