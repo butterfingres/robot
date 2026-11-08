@@ -4,12 +4,12 @@ CC = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 CFLAGS = -mthumb -mcpu=cortex-m3 -mlittle-endian -Os -Wall -Wextra	\
 -Wpedantic -ffunction-sections -fsigned-char -fomit-frame-pointer		\
--fsingle-precision-constant
+-fsingle-precision-constant -Iinclude
 LDFLAGS = -nostartfiles -Wl,-static -Bfirmware -Wl,-u,VectorTable	\
 -Wl,-T -Xlinker firmware/cortex.ld -Wl,--gc-sections							\
 -Wl,--start-group -lpros -Wl,--end-group
 
-OBJS = src/main.o
+OBJS = src/helloWorld.o src/main.o
 
 all: robot.bin
 clean:
